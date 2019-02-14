@@ -1,23 +1,4 @@
-# ruia-motor
-
-A [Ruia](https://github.com/howie6879/ruia) plugin that uses the motor to store data
-
-
-```text
-Notice:  Works on ruia >= 0.5.0
-```
-
-### Installation
-
-```shell
-pip install -U ruia-motor
-```
-
-### Usage
-
-`ruia-motor` will be automatically store data to mongodb:
-
-```python
+#!/usr/bin/env python
 import asyncio
 
 from ruia import AttrField, Item, Spider, TextField
@@ -67,6 +48,3 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     RuiaMotor.init_spider(loop=loop, spider=DoubanSpider)
     DoubanSpider.start(loop=loop)
-```
-
-Enjoy it :)
