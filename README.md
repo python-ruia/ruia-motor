@@ -38,12 +38,6 @@ class DoubanItem(Item):
 class DoubanSpider(Spider):
     start_urls = ['https://movie.douban.com/top250']
 
-    mongodb_config = {
-        'host': '127.0.0.1',
-        'port': 27017,
-        'db': 'ruia_motor'
-    }
-
     async def parse(self, response):
         etree = response.html_etree
         pages = ['?start=0&filter='] + [i.get('href') for i in etree.cssselect('.paginator>a')]
@@ -62,6 +56,11 @@ class DoubanSpider(Spider):
 
 
 async def init_plugins_after_start(spider_ins):
+    spider_ins.mongodb_config = {
+        'host': '127.0.0.1',
+        'port': 27017,
+        'db': 'ruia_motor'
+    }
     RuiaMotor.init_spider(spider_ins=spider_ins)
 
 
