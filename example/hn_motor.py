@@ -1,23 +1,5 @@
-# ruia-motor
+#!/usr/bin/env python
 
-A [Ruia](https://github.com/howie6879/ruia) plugin that uses the motor to store data
-
-
-```text
-Notice:  Works on ruia >= 0.5.0
-```
-
-### Installation
-
-```shell
-pip install -U ruia-motor
-```
-
-### Usage
-
-`ruia-motor` will be automatically store data to mongodb:
-
-```python
 from ruia import AttrField, TextField, Item, Spider
 from ruia_motor import RuiaMotor
 
@@ -50,6 +32,3 @@ async def init_plugins_after_start(spider_ins):
 
 if __name__ == '__main__':
     HackerNewsSpider.start(after_start=init_plugins_after_start)
-```
-
-Enjoy it :)
