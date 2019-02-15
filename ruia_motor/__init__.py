@@ -46,6 +46,6 @@ async def process_ruia_motor_callback_result(spider_ins, callback_result: RuiaMo
 
     try:
         await coll_conn.insert_one(document=data)
-        spider_ins.logger.info(f'<RuiaMotor: Insert successful>')
+        # spider_ins.logger.info(f'<RuiaMotor: Insert successful>')
     except Exception as e:
         spider_ins.logger.error(f'<RuiaMotor: Insert error {e}>')

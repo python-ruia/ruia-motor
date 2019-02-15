@@ -15,7 +15,7 @@ def read(file_name):
 
 setup(
     name='ruia_motor',
-    version='0.0.2',
+    version='0.0.3',
     author='Howie Hu',
     description="ruia_motor - a Ruia plugin that uses the motor to store data",
     long_description=read('README.md'),
