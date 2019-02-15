@@ -2,7 +2,9 @@
 """
  Created by howie.hu at 2019/2/14.
 """
+from types import MethodType
 
+from ruia import Spider
 from ruia_motor.motor_base import MotorBase
 
 
@@ -14,8 +16,8 @@ class RuiaMotor:
         self.data = data
 
     @classmethod
-    def init_spider(cls, loop=None, *, spider):
-        mongodb_config = getattr(spider, 'mongodb_config', None)
+    def init_spider(cls, *, spider_ins: Spider):
+        mongodb_config = getattr(spider_ins, 'mongodb_config', None)
         if not mongodb_config or not isinstance(mongodb_config, dict):
             raise ValueError("""
             RuiaMotor must have a param named mongodb_config, eg: 
@@ -28,10 +30,10 @@ class RuiaMotor:
             }
             """)
 
-        spider.motor_base = MotorBase(mongodb_config=mongodb_config, loop=loop)
-        spider.callback_result_map = spider.callback_result_map or {}
-        setattr(spider, 'process_ruia_motor_callback_result', process_ruia_motor_callback_result)
-        spider.callback_result_map.update({'RuiaMotor': 'process_ruia_motor_callback_result'})
+        spider_ins.motor_base = MotorBase(mongodb_config=mongodb_config, loop=spider_ins.loop)
+        spider_ins.callback_result_map = spider_ins.callback_result_map or {}
+        spider_ins.process_ruia_motor_callback_result = MethodType(process_ruia_motor_callback_result, spider_ins)
+        spider_ins.callback_result_map.update({'RuiaMotor': 'process_ruia_motor_callback_result'})
 
 
 async def process_ruia_motor_callback_result(spider_ins, callback_result: RuiaMotor):
@@ -44,5 +46,6 @@ async def process_ruia_motor_callback_result(spider_ins, callback_result: RuiaMo
 
     try:
         await coll_conn.insert_one(document=data)
+        spider_ins.logger.info(f'<RuiaMotor: Insert successful>')
     except Exception as e:
         spider_ins.logger.error(f'<RuiaMotor: Insert error {e}>')

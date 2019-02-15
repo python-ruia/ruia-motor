@@ -18,8 +18,6 @@ pip install -U ruia-motor
 `ruia-motor` will be automatically store data to mongodb:
 
 ```python
-import asyncio
-
 from ruia import AttrField, Item, Spider, TextField
 from ruia_motor import RuiaMotor
 
@@ -63,10 +61,12 @@ class DoubanSpider(Spider):
             yield RuiaMotor(collection='douban250', data=data)
 
 
+async def init_plugins_after_start(spider_ins):
+    RuiaMotor.init_spider(spider_ins=spider_ins)
+
+
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    RuiaMotor.init_spider(loop=loop, spider=DoubanSpider)
-    DoubanSpider.start(loop=loop)
+    DoubanSpider.start(after_start=init_plugins_after_start)
 ```
 
 Enjoy it :)
