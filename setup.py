@@ -15,13 +15,13 @@ def read(file_name):
 
 setup(
     name='ruia_motor',
-    version='0.0.3',
+    version='0.0.4',
     author='Howie Hu',
     description="ruia_motor - a Ruia plugin that uses the motor to store data",
     long_description=read('README.md'),
     long_description_content_type='text/markdown',
     author_email='xiaozizayang@gmail.com',
-    install_requires=['motor', 'ruia>=0.5.0'],
+    install_requires=['motor', 'ruia>=0.8.0'],
     url="https://github.com/python-ruia/ruia-motor",
     packages=find_packages(),
     license='MIT',
@@ -30,6 +30,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     project_urls={
