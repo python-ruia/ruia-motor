@@ -3,6 +3,7 @@
  Created by howie.hu at 2019/2/14.
 """
 import asyncio
+
 from functools import wraps
 
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -38,7 +39,7 @@ class MotorBase:
         self.mongodb_config = mongodb_config
         self.loop = loop or asyncio.get_event_loop()
 
-    def client(self, db):
+    def client(self):
         motor_uri = "mongodb://{account}{host}:{port}/{database}".format(
             account="{username}:{password}@".format(
                 username=self.mongodb_config["username"],
@@ -48,7 +49,7 @@ class MotorBase:
             else "",
             host=self.mongodb_config.get("host", "localhost"),
             port=self.mongodb_config.get("port", 271017),
-            database=db,
+            database=self.mongodb_config.get("db", "admin"),
         )
         return AsyncIOMotorClient(motor_uri, io_loop=self.loop)
 
@@ -60,7 +61,7 @@ class MotorBase:
         """
         db = db or self.mongodb_config["db"]
         if db not in self._db:
-            self._db[db] = self.client(db=db)[db]
+            self._db[db] = self.client()[db]
 
         return self._db[db]
 
